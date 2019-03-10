@@ -4,14 +4,14 @@
 # ## A Quick ETL (Extract - Tranform - Load) Process to Showcase Python's Pandas library
 # ### Source Data: Zillow's Median Home Value with Time Series
 # ### ETL process:
-# ### 1- clean up data, remove unused columns, rename columns
-# ### 2 - filter out data to obtain only Austin-RoundRock metro area
-# ### 3 - calculate YoY value change in percentage format
-# ### 3.5 - calculate median home value each year
-# ### 4 - export data to csv for loading into database or analytical process
-# ### 5 - bonus: we can build visualization here in Python to quickly see trends and projections
+# #### 1- clean up data, remove unused columns, rename columns
+# #### 2 - filter out data to obtain only Austin-RoundRock metro area
+# #### 3 - calculate YoY value change in percentage format
+# #### 4 - calculate median home value each year
+# #### 5 - export data to csv for loading into database or analytical process
+# #### 6 - bonus: we can build visualization here in Python to quickly see trends and projections
 
-# In[1]:
+# In[3]:
 
 
 # input dependencies
@@ -19,11 +19,11 @@ import pandas as pd
 import numpy as np
 
 
-# In[2]:
+# In[4]:
 
 
 # original Zillow data set
-inputFile = "data-source/Zip_Zhvi_SingleFamilyResidence.csv"
+inputFile = "data-source/Zip_Zhvi_AllHomes.csv"
 
 csv_reader = pd.read_csv(inputFile, encoding='latin-1')
 
@@ -32,21 +32,21 @@ df.rename(index=str, columns={'RegionName' : 'Zip'}, inplace = True)
 df.head()
 
 
-# In[3]:
+# In[5]:
 
 
 # clean up unused columns
 df.drop(columns=['RegionID'], inplace = True)
 
 
-# In[4]:
+# In[6]:
 
 
 df = df.loc[df['Metro'] == 'Austin-Round Rock']
 df.head()
 
 
-# In[5]:
+# In[7]:
 
 
 def avgHomeValue (list):
@@ -74,7 +74,7 @@ df1 = df1.reset_index(drop=True)
 df1.head()
 
 
-# In[6]:
+# In[8]:
 
 
 # function calculating year over year value change in percentage, level of detail to 1 digit after dicimal point
@@ -100,7 +100,7 @@ df2 = df2.reset_index(drop=True)
 df2.head()
 
 
-# In[7]:
+# In[9]:
 
 
 # export result to output csv file
@@ -110,7 +110,7 @@ df1.to_csv(output1, index=True)
 df2.to_csv(output2, index=True)
 
 
-# In[8]:
+# In[10]:
 
 
 # still a working progress, further data transformation is needed.
@@ -127,7 +127,7 @@ xlim = xlim[3:]
 xlim
 
 
-# In[9]:
+# In[11]:
 
 
 ylim = df2.index.values
@@ -139,10 +139,10 @@ plt.xticks(rotation='vertical')
 plt.show()
 
 
-# In[ ]:
+# In[12]:
 
 
-
+get_ipython().system('jupyter nbconvert --to Python Zillow-Data-ETL.ipynb')
 
 
 # In[ ]:
